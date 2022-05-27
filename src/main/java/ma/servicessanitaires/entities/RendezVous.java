@@ -1,8 +1,10 @@
 package ma.servicessanitaires.entities;
 
+import enums.RendezVousStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -16,6 +18,8 @@ public class RendezVous {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Date date;
+    @Enumerated(EnumType.STRING)
+    private RendezVousStatus status;
     @OneToOne
     private Medecin medecin;
     @OneToOne

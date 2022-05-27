@@ -1,15 +1,17 @@
 package ma.servicessanitaires.services.patientService;
 
+import ma.servicessanitaires.dtos.PatientDto;
 import ma.servicessanitaires.entities.Patient;
+import ma.servicessanitaires.exceptions.PatientNotFoundException;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface PatientSer {
-    Patient create(Patient patient);
-    Patient update(Patient patient);
-    Boolean delete(Long id);
-    Collection<Patient> list(int limit);
-    Patient get(Long id);
+    PatientDto createPatient(PatientDto patientDto);
+    PatientDto updatePatient(PatientDto patientDto);
+    List<PatientDto> listPatients();
+    PatientDto getPatient(Long id) throws PatientNotFoundException;
     Patient Connect(String email,String pwd);
 
 }

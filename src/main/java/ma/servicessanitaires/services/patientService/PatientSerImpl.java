@@ -3,8 +3,14 @@ package ma.servicessanitaires.services.patientService;
 import groovy.util.logging.Log;
 import groovy.util.logging.Log4j;
 import groovy.util.logging.Slf4j;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import ma.servicessanitaires.dtos.PatientDto;
 import ma.servicessanitaires.entities.Patient;
+import ma.servicessanitaires.entities.RendezVous;
+import ma.servicessanitaires.exceptions.PatientNotFoundException;
+import ma.servicessanitaires.exceptions.RendezvousNotFoundException;
+import ma.servicessanitaires.mappers.PatientMapper;
 import ma.servicessanitaires.repositories.PatientRepo;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -13,21 +19,25 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.servlet.Servlet;
 import javax.transaction.Transactional;
 import java.util.Collection;
+import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import static org.springframework.data.domain.PageRequest.*;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Service
 @Transactional
 @Slf4j
-@Log4j
 public class PatientSerImpl implements PatientSer {
-    private final PatientRepo patientRepo;
+    private PatientRepo patientRepo;
+    private PatientMapper patientMapper;
+
     @Override
-    public Patient create(Patient patient) {
-        patient.setImgUrl(setPatientImgUrl());
-        return patientRepo.save(patient);
+    public PatientDto createPatient(PatientDto patientDto) {
+        patientDto.setImgUrl(setPatientImgUrl());
+        Patient patient = patientMapper.fromPatientDto(patientDto);
+        return patientMapper.fromPatient(patientRepo.save(patient));
     }
 
     private String setPatientImgUrl() {
@@ -36,24 +46,25 @@ public class PatientSerImpl implements PatientSer {
     }
 
     @Override
-    public Patient update(Patient patient) {
-        return patientRepo.save(patient);
+    public PatientDto updatePatient(PatientDto patientDto) {
+        Patient patient = patientMapper.fromPatientDto(patientDto);
+        return patientMapper.fromPatient(patientRepo.save(patient));
     }
 
     @Override
-    public Boolean delete(Long id) {
-        patientRepo.deleteById(id);
-        return true;
+    public List<PatientDto> listPatients() {
+        List<Patient> patients = patientRepo.findAll();
+        List<PatientDto> patientsDto = patients.stream()
+                .map(patient -> patientMapper.fromPatient(patient))
+                .collect(Collectors.toList());
+        return patientsDto;
     }
 
     @Override
-    public Collection<Patient> list(int limit) {
-        return patientRepo.findAll(of(0,limit)).toList();
-    }
-
-    @Override
-    public Patient get(Long id) {
-        return patientRepo.findById(id).get();
+    public PatientDto getPatient(Long id) throws PatientNotFoundException {
+        Patient patient = patientRepo.findById(id)
+                .orElseThrow(() -> new PatientNotFoundException("Patient inexistant"));
+        return patientMapper.fromPatient(patient) ;
     }
 
     @Override
