@@ -1,8 +1,7 @@
 package ma.servicessanitaires.dtos;
 
-import enums.RendezVousStatus;
+import ma.servicessanitaires.enums.RendezVousStatus;
 import ma.servicessanitaires.entities.Medecin;
-import ma.servicessanitaires.entities.Patient;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
