@@ -19,8 +19,12 @@ public class Medicament {
     @NotEmpty
     @Column(unique = true)
     private String nomCommercial;
-    private Double dosage;
+    private Double prix;
+    private Double mesure;
+    @Column(length = 3)
+    private String uniteDeMesure;
     private String description;
+    private String urlImg;
     private String forme;
     private String effetsSecondaires;
     @ManyToMany

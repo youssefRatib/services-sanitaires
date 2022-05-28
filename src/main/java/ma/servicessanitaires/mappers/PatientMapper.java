@@ -55,7 +55,7 @@ public class PatientMapper {
         BeanUtils.copyProperties(consultation,consultationDto);
         consultationDto.setPatientId(consultation.getPatient().getId());
         consultationDto.setMedecinId(consultation.getMedecin().getId());
-        consultationDto.setTypeConsultation(consultation.getTypeConsultation().getId());
+        consultationDto.setRendezVousId(consultation.getRendezVous().getId());
         return consultationDto;
     }
     public Consultation fromConsultationDto(ConsultationDto consultationDto) throws PatientNotFoundException, MedecinNotFoundException, TypeConsultationNotFoundException {
@@ -67,9 +67,6 @@ public class PatientMapper {
         Medecin medecin = medecinRepo.findById(consultationDto.getMedecinId())
                 .orElseThrow(() -> new MedecinNotFoundException("Medecin inexistant"));
         consultation.setMedecin(medecin);
-        TypeConsultation typeConsultation = typeConsultationRepo.findById(consultationDto.getTypeConsultation())
-                .orElseThrow(() -> new TypeConsultationNotFoundException("Medecin inexistant"));
-        consultation.setTypeConsultation(typeConsultation);
         return consultation;
     }
 

@@ -1,6 +1,8 @@
 package ma.servicessanitaires.dtos;
 
 import lombok.Data;
+import ma.servicessanitaires.entities.Ordonnance;
+import ma.servicessanitaires.entities.TypeConsultation;
 
 import java.util.Date;
 
@@ -9,9 +11,9 @@ public class ConsultationDto {
     private Long id;
     private Date date;
     private String synthese;
-    private int typeConsultation;
+    private TypeConsultation typeConsultation;
     private Long medecinId;
     private Long patientId;
     private Long rendezVousId;
-    private Long ordonnanceId;
+    private Ordonnance ordonnance;
 }
