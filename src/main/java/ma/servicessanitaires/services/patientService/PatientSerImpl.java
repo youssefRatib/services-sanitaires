@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import static org.springframework.data.domain.PageRequest.*;
 
 @AllArgsConstructor
 @Service
