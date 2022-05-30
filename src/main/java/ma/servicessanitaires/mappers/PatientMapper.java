@@ -8,6 +8,7 @@ import ma.servicessanitaires.entities.*;
 import ma.servicessanitaires.exceptions.MedecinNotFoundException;
 import ma.servicessanitaires.exceptions.PatientNotFoundException;
 import ma.servicessanitaires.exceptions.TypeConsultationNotFoundException;
+import ma.servicessanitaires.repositories.ImageRepo;
 import ma.servicessanitaires.repositories.MedecinRepo;
 import ma.servicessanitaires.repositories.PatientRepo;
 import ma.servicessanitaires.repositories.TypeConsultationRepo;
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Service;
 public class PatientMapper {
     private PatientRepo patientRepo;
     private MedecinRepo medecinRepo;
-    private TypeConsultationRepo typeConsultationRepo;
+    private ImageRepo imageRepo;
     public PatientDto fromPatient(Patient patient){
         PatientDto patientDTO=new PatientDto();
         BeanUtils.copyProperties(patient,patientDTO);
@@ -27,7 +28,10 @@ public class PatientMapper {
     }
     public Patient fromPatientDto(PatientDto patientDto){
         Patient patient=new Patient();
+        Image image = imageRepo.findById(patientDto.getImageId()).orElse(null);
+        //System.out.println(image);
         BeanUtils.copyProperties(patientDto,patient);
+        patient.setImage(image);
         return patient;
     }
 

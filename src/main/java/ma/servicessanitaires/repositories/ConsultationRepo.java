@@ -13,3 +13,5 @@ public interface ConsultationRepo extends JpaRepository<Consultation,Long> {
     List<Consultation> findAllByPatientAndMedecin(Patient patient,Medecin medecin);
     List<Consultation> findAllByPatientAndTypeConsultation(Patient patient,TypeConsultation typeConsultation);
 }
+
+

@@ -27,4 +27,5 @@ public class ConsultationApi {
     public List<ConsultationDto> ConsultationByType(Long patientId,@PathVariable int typeId) throws TypeConsultationNotFoundException, PatientNotFoundException {
         return consultationSer.listConsultationsByType(patientId,typeId);
     }
+
 }

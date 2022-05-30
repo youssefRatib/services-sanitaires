@@ -23,6 +23,7 @@ public class PatientApi {
     }
     @PostMapping("/patients")
     public PatientDto savePatient(@RequestBody PatientDto patientDto){
+        System.out.println(patientDto);
         return patientSer.createPatient(patientDto);
     }
     @PutMapping("/patients/{patientId}")

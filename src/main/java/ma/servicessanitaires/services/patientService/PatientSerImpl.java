@@ -23,6 +23,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.Servlet;
 import javax.transaction.Transactional;
+import java.io.Console;
 import java.util.Collection;
 import java.util.List;
 import java.util.logging.Logger;
@@ -42,15 +43,11 @@ public class PatientSerImpl implements PatientSer {
 
     @Override
     public PatientDto createPatient(PatientDto patientDto) {
-        patientDto.setImgUrl(setPatientImgUrl());
+        System.out.println(patientDto);
         Patient patient = patientMapper.fromPatientDto(patientDto);
         return patientMapper.fromPatient(patientRepo.save(patient));
     }
 
-    private String setPatientImgUrl() {
-        String imgNames = "logo_main.png";
-        return ServletUriComponentsBuilder.fromCurrentContextPath().path("/patient/img/"+imgNames).toUriString();
-    }
 
     @Override
     public PatientDto updatePatient(PatientDto patientDto) {
@@ -115,4 +112,6 @@ public class PatientSerImpl implements PatientSer {
                 .collect(Collectors.toList());
         return consultationDtoList;
     }
+
+
 }
